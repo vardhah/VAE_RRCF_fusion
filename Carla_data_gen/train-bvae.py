@@ -217,20 +217,21 @@ def savedata(test_in, test_out, test_encoded, Working_path):
 
 
 if __name__ == '__main__':
-    train_data = "/home/scope/Carla/CARLA_0.9.6/PythonAPI/TCPS-data/Train-data/"
+    path = "/home/scope/Carla/"
+    train_data = path + "Train-data/"
     input_image = load_training_images(train_data)
     input_image = shuffle(input_image)
     inp = data_reshape(input_image)
     Latents = 30#hyperparameter1
-    betas = [1.4]#,1.3,1.4,1.5,2.0,3.0,4.0,5.0]#hyperparameter2
+    betas = [1.0]#,1.3,1.4,1.5,2.0,3.0,4.0,5.0]#hyperparameter2
     epoch_number=150 #epoch numbers for hyperparameter tuning and training
     batch_size_number=16 #batch size for hyperparameter tuning and training
-    path = "/home/scope/Carla/CARLA_0.9.6/PythonAPI/SVDD/"
+   
     print("******************************Hyperparameter Tuning******************************************")
     #rand_x, rand_y=hyperparameter_search(trial,iterations,Latents,betas,inp,epoch_number,batch_size_number)# call the hyperparameter tuning function
     print("******************************Training******************************************")
     for i in range(len(betas)):
-        dir_path = "/home/scope/Carla/CARLA_0.9.6/PythonAPI/TCPS-results/Trained-models/"
+        dir_path = path + "TCPS-results/Trained-models/"
         data_store = dir_path + '%d_%0.1f'%(Latents,betas[i]) + '/'
         os.makedirs(data_store, exist_ok=True)
         autoencoder,encoder,z_log_var,scheduler = CreateModels(Latents,betas[i])# Running the autoencoder model
